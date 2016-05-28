@@ -1,6 +1,6 @@
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
-import resource.SampleResources;
+import resource.Resource;
 
 /**
  * Created by sboob on 5/27/2016.
@@ -8,7 +8,7 @@ import resource.SampleResources;
 public class ServerApplication extends Application<MyConfiguration> {
     @Override
     public void run(MyConfiguration myConfiguration, Environment environment) throws Exception {
-        SampleResources sampleResources =new SampleResources(myConfiguration.getMessage());
+        Resource sampleResources =new Resource();
         environment.jersey().register(sampleResources);
     }
 
