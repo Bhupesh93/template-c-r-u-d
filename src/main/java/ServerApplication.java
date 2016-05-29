@@ -14,7 +14,7 @@ public class ServerApplication extends Application<MyConfiguration> {
     @Override
     public void run(MyConfiguration myConfiguration, Environment environment) throws Exception {
         TODOList todoList =new TODOList();
-        MongoDb mongoDb = new MongoDb("localhost",27017,"template-todo");
+        MongoDb mongoDb = new MongoDb(myConfiguration.getMongoDbHostIp(),Integer.parseInt(myConfiguration.getMongoDbHostPort()),myConfiguration.getMongoDbName());
         TodoDAO todoDAO = new TodoDaoImpl(TODO.class,mongoDb.getDb());
         Resource sampleResources =new Resource(todoDAO);
         environment.jersey().register(sampleResources);

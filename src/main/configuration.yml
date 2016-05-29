@@ -1,1 +1,4 @@
 message : this is a messages
+mongoDbHostIp : 127.0.0.1
+mongoDbHostPort : 27017
+mongoDbName : template-todo
