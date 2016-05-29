@@ -13,6 +13,6 @@ import java.util.List;
 public interface TodoDAO extends DAO<TODO,ObjectId> {
     public List<TODO> getAllTodo();
     public TODO getTodo(String title);
-    public UpdateResults updateTodo(TODO newTodo);
+    public int updateTodo(TODO newTodo);
     public void deleteTodo(String title);
 }

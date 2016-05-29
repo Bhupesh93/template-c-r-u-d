@@ -3,7 +3,6 @@ package resource;
 import com.codahale.metrics.annotation.Timed;
 import database.TodoDAO;
 import model.TODO;
-import org.mongodb.morphia.query.UpdateResults;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -52,8 +51,8 @@ public class Resource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response updateTodo(TODO newTodo) {
 
-        UpdateResults updateResults = todoDAO.updateTodo(newTodo);
-        if (updateResults.getUpdatedCount() > 0)
+        int updatedCount = todoDAO.updateTodo(newTodo);
+        if (updatedCount > 0)
             return Response.ok().build();
         else
             return Response.notModified().build();
