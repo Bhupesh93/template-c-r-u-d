@@ -1,3 +1,8 @@
+import database.MongoDb;
+import database.TodoDAO;
+import database.TodoDaoImpl;
+import model.TODO;
+import model.TODOList;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import resource.Resource;
@@ -8,7 +13,10 @@ import resource.Resource;
 public class ServerApplication extends Application<MyConfiguration> {
     @Override
     public void run(MyConfiguration myConfiguration, Environment environment) throws Exception {
-        Resource sampleResources =new Resource();
+        TODOList todoList =new TODOList();
+        MongoDb mongoDb = new MongoDb("localhost",27017,"template-todo");
+        TodoDAO todoDAO = new TodoDaoImpl(TODO.class,mongoDb.getDb());
+        Resource sampleResources =new Resource(todoDAO);
         environment.jersey().register(sampleResources);
     }
 

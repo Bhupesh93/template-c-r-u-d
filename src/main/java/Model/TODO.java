@@ -1,4 +1,9 @@
-package Model;
+package model;
+
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -6,22 +11,46 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by sboob on 5/28/2016.
  */
 @XmlRootElement
+@Entity
 public class TODO {
-    public  TODO(){
+
+    @Id
+    private ObjectId id;
+    private String title;
+
+    @Embedded
+    private TODODetails todoDetails;
+    public TODO(){
 
     }
-    public TODO(String text) {
+
+    public TODO(String title, TODODetails todoDetails) {
         super();
-        this.text = text;
+        this.title = title;
+        this.todoDetails = todoDetails;
     }
 
-    private  String text;
+    public Object getId() {  return id;  }
 
-    public String getText() {
-        return text;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getTitle() {
+        return title;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public TODODetails getTodoDetails() {
+        return todoDetails;
+    }
+
+    public void setTodoDetails(TODODetails todoDetails) {
+        this.todoDetails = todoDetails;
+    }
+
+
 }
