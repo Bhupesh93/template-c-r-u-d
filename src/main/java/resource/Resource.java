@@ -1,8 +1,8 @@
 package resource;
 
+import com.codahale.metrics.annotation.Timed;
 import database.TodoDAO;
 import model.TODO;
-import com.codahale.metrics.annotation.Timed;
 import org.mongodb.morphia.query.UpdateResults;
 
 import javax.ws.rs.*;
@@ -24,7 +24,7 @@ public class Resource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Timed
-    public List<TODO> getTodo(){
+    public List<TODO> getTodo() {
         return todoDAO.getAllTodo();
     }
 
@@ -32,8 +32,8 @@ public class Resource {
     @Path("/{title}")
     @Produces({MediaType.APPLICATION_JSON})
     @Timed
-    public TODO getTodo(@PathParam("title")String title){
-        return todoDAO.getTodosWithTitle(title);
+    public TODO getTodo(@PathParam("title") String title) {
+        return todoDAO.getTodo(title);
 
     }
 
@@ -41,7 +41,7 @@ public class Resource {
     @Timed
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response addTodo(TODO todo){
+    public Response addTodo(TODO todo) {
         todoDAO.save(todo);
         return Response.ok().build();
     }
@@ -50,12 +50,21 @@ public class Resource {
     @Timed
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response updateTodo(TODO newTodo){
+    public Response updateTodo(TODO newTodo) {
 
-       UpdateResults updateResults = todoDAO.updateDetails(newTodo);
-        if(updateResults.getUpdatedCount()>0)
-        return Response.ok().build();
+        UpdateResults updateResults = todoDAO.updateTodo(newTodo);
+        if (updateResults.getUpdatedCount() > 0)
+            return Response.ok().build();
         else
             return Response.notModified().build();
+    }
+
+    @DELETE
+    @Timed
+    @Path("/{title}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response deleteTodo(@PathParam("title") String title) {
+        todoDAO.deleteTodo(title);
+        return Response.ok().build();
     }
 }

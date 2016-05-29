@@ -30,14 +30,14 @@ public class TodoDaoImpl extends BasicDAO<TODO,ObjectId> implements  TodoDAO {
     }
 
     @Override
-    public TODO getTodosWithTitle(String title) {
+    public TODO getTodo(String title) {
         Query<TODO> query = createQuery().field("title").equal(title);
         return query.get();
     }
 
 
     @Override
-    public UpdateResults updateDetails(TODO newTodo) {
+    public UpdateResults updateTodo(TODO newTodo) {
         Query<TODO> query = createQuery().field("title").equal(newTodo.getTitle());
         UpdateOperations<TODO> updateOperations = createUpdateOperations().set("todoDetails",newTodo.getTodoDetails());
         UpdateResults updateResults = update(query,updateOperations);
@@ -46,6 +46,11 @@ public class TodoDaoImpl extends BasicDAO<TODO,ObjectId> implements  TodoDAO {
 
         }
         return updateResults;
+    }
+
+    public void deleteTodo(String title){
+        Query<TODO> query = createQuery().field("title").equal(title);
+        deleteByQuery(query);
     }
 
 }
